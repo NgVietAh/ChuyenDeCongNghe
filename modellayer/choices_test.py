@@ -5,7 +5,7 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 django.setup()
 
-from polls.models import Person
+from myapp.models import Person
 
 # Tạo object Person
 p = Person(first_name="Fred", shirt_size="L")

@@ -5,7 +5,7 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 django.setup()
 
-from polls.models import Fruit
+from myapp.models import Fruit
 
 fruit = Fruit.objects.create(name="Apple")
 
