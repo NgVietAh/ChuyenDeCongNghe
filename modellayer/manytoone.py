@@ -1,7 +1,7 @@
 import os
 import django
 
-# Cấu hình Django
+#Khởi tạo Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 django.setup()
 
