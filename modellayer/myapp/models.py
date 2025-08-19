@@ -1,5 +1,6 @@
 from django.db import models
-from django.utils.text import slugify
+# from django.utils.text import slugify
+from datetime import date
 
 # Create your models here.
 
@@ -127,15 +128,39 @@ class Restaurant(models.Model):
     def __str__(self):
         return f"Restaurant: {self.place.name}"
     
+# class Blog(models.Model):
+#     name = models.CharField(max_length=100)
+#     slug = models.SlugField(blank=True)
+
+#     def save(self, **kwargs):
+#         self.slug = slugify(self.name)
+#         if (update_fields := kwargs.get("update_fields")) is not None and "name" in update_fields:
+#             kwargs["update_fields"] = {"slug"}.union(update_fields)
+#         super().save(**kwargs)
 class Blog(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.SlugField(blank=True)
+    tagline = models.TextField(default='No Tagline')
+    def __str__(self):
+        return self.name
 
-    def save(self, **kwargs):
-        self.slug = slugify(self.name)
-        if (update_fields := kwargs.get("update_fields")) is not None and "name" in update_fields:
-            kwargs["update_fields"] = {"slug"}.union(update_fields)
-        super().save(**kwargs)
+class Author(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    def __str__(self):
+        return self.name
+
+class Entry(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    headline = models.CharField(max_length=255)
+    body_text = models.TextField()
+    pub_date = models.DateField()
+    mod_date = models.DateField(default=date.today)
+    authors = models.ManyToManyField(Author)
+    number_of_comments = models.IntegerField(default=0)
+    number_of_pingbacks = models.IntegerField(default=0)
+    rating = models.IntegerField(default=5)
+    def __str__(self):
+        return self.headline
 
 #abstract
 #Kế thừa meta từ nhiều class
@@ -187,3 +212,32 @@ class Student(CommonInfo, Unmanaged):
 
 # class BookReview(Book, Article):
 #     review_text = models.TextField()
+
+from django.db import models
+
+class Dog(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+    # Field mới để demo deprecated
+    color = models.CharField(max_length=50, default='brown')  # Field mới
+
+
+
+class IPAddressField(models.Field):
+    system_check_deprecated_details = {
+        "msg": "IPAddressField has been deprecated. Use GenericIPAddressField instead.",
+        "hint": "Use GenericIPAddressField instead.",
+        "id": "fields.W900",
+    }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def deconstruct(self):
+        name, path, args, kwargs = super().deconstruct()
+        return name, path, args, kwargs
+
+    def get_internal_type(self):
+        return "CharField"
+
+
