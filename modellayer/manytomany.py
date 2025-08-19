@@ -25,8 +25,8 @@ margherita.toppings.add(cheese, mushroom)
 pepperoni_pizza.toppings.add(cheese, pepperoni)
 
 # --- Truy vấn ---
-print("🍕 Margherita toppings:", margherita.toppings.all())  
+print("Margherita toppings:", margherita.toppings.all())  
 
-print("🍕 Pepperoni Pizza toppings:", pepperoni_pizza.toppings.all())  
+print("Pepperoni Pizza toppings:", pepperoni_pizza.toppings.all())  
 
-print("🧀 Cheese có trong các pizza:", cheese.pizza_set.all())  
+print("Cheese có trong các pizza:", cheese.pizza_set.all())  
