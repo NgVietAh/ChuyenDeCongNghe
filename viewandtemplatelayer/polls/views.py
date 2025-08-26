@@ -18,9 +18,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 import datetime
 from .models import Poll
 
-def current_datetime(request):
+async def current_datetime(request):
     now = datetime.datetime.now()
-    html = '<html><body>It is now %s.</body></html>' % now
+    html = '<html lang="en"><body>It is now %s.</body></html>' % now
     return HttpResponse(html)
 
 def index(request):
@@ -46,3 +46,5 @@ def detail(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
     return render(request, "polls/detail.html", {"poll": poll})
 
+def my_custom_404_view(request, exception):
+    return render(request, "polls/404.html", status=404)

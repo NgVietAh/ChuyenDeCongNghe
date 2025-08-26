@@ -21,3 +21,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('polls/', include("polls.urls", namespace="polls")),
 ]
+handler404 = "polls.views.my_custom_404_view"
