@@ -1,40 +1,38 @@
-# from django.urls import path, re_path, include
-# from . import views
-
-# app_name = "polls"
-
-# article_patterns = [
-#     path("2003/", views.special_case_2003, name="special-case-2003"),
-#     re_path(r"^(?P<year>[0-9]{4})/$", views.year_archive, name="year-archive"),
-#     re_path(r"^(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$", views.month_archive, name="month-archive"),
-#     re_path(
-#         r"^(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/(?P<slug>[\w-]+)/$",
-#         views.article_detail,
-#         name="article-detail",
-#     ),
-# ]
-
-# urlpatterns = [
-#     path("articles/", include(article_patterns)),
-# ]
-
-#Dùng template
 from django.urls import path, re_path, include
-from . import views
+from .views import (
+    PollDetailView,
+    PollListView,
+    CurrentDateTimeView,
+    Special2003View,
+    YearArchiveView,
+    MonthArchiveView,
+    ArticleDetailView,
+    GoTo2025View,
+    AuthorCreateView, AuthorDeleteView, AuthorUpdateView, RecordInterestView
+)
 
 app_name = "polls"
 
 article_patterns = [
-    path("", views.index, name="index"),
-    path("2003/", views.special_case_2003, name="special-case-2003"),
-    re_path(r"^(?P<year>[0-9]{4})/$", views.year_archive, name="year-archive"),
-    re_path(r"^(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$", views.month_archive, name="month-archive"),
-    re_path(r"^(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/(?P<slug>[\w-]+)/$", views.article_detail, name="article-detail"),
+    path("", PollListView.as_view(), name="index"),
+    path("2003/", Special2003View.as_view(), name="special-case-2003"),
+    re_path(r"^(?P<year>[0-9]{4})/$", YearArchiveView.as_view(), name="year-archive"),
+    re_path(r"^(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$", MonthArchiveView.as_view(), name="month-archive"),
+    re_path(r"^(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/(?P<slug>[\w-]+)/$", ArticleDetailView.as_view(), name="article-detail"),
 ]
 
 urlpatterns = [
     path("articles/", include(article_patterns)),
-    path('time/', views.current_datetime, name='current-datetime'),
-    path("poll/<int:poll_id>/", views.detail, name="detail"),
-    path("go-to-2025/", views.go_to_2025, name="go-to-2025"),
+    path("time/", CurrentDateTimeView.as_view(), name="current-datetime"),
+    path("poll/<int:poll_id>/", PollDetailView.as_view(), name="detail"),
+    path("go-to-2025/", GoTo2025View.as_view(), name="go-to-2025"),
+    path("author/add/", AuthorCreateView.as_view(), name="author-add"),
+    path("author/<int:pk>/", AuthorUpdateView.as_view(), name="author-update"),
+    path("author/<int:pk>/delete/", AuthorDeleteView.as_view(), name="author-delete"),
+    path(
+        "author/<int:pk>/interest/",
+        RecordInterestView.as_view(),
+        name="author-interest",
+    ),
+
 ]

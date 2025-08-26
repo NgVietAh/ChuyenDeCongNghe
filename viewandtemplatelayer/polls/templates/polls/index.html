@@ -1,8 +1,11 @@
+{% extends "base.html" %}
 
-<h1>Danh sách bài viết</h1>
-<ul>
-  <li><a href="{% url 'polls:special-case-2003' %}">Bài viết 2003</a></li>
-  <li><a href="{% url 'polls:year-archive' year=2025 %}">Bài viết năm 2025</a></li>
-  <li><a href="{% url 'polls:month-archive' year=2025 month='08' %}">Bài viết tháng 08/2025</a></li>
-  <li><a href="{% url 'polls:article-detail' year=2025 month='08' slug='bai-viet-mau' %}">Chi tiết bài viết</a></li>
-</ul>
+{% block content %}
+  <h1>Danh sách Poll</h1>
+  <p>Tổng số poll: {{ total_polls }}</p>
+  <ul>
+    {% for poll in poll_list %}
+      <li>{{ poll.question }} - {{ poll.pub_date|date:"d/m/Y" }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
