@@ -1,0 +1,33 @@
+# Facebook Crawler Configuration
+# ================================
+# IMPORTANT: Do NOT commit real credentials to version control.
+# Copy this file to config.local.yaml and fill in your credentials there.
+
+facebook:
+  # Facebook login credentials
+  email: "your_email@example.com"
+  password: "your_password"
+
+  # Profile URL to crawl (e.g., https://www.facebook.com/username)
+  profile_url: "https://www.facebook.com/profile_url_here"
+
+crawler:
+  # Browser settings
+  browser: chrome
+  headless: false
+  window_width: 1920
+  window_height: 1080
+
+  # Crawling settings
+  max_posts: 20                # Maximum number of posts to crawl (0 = unlimited)
+  scroll_pause_time: 3         # Seconds to wait between scrolls
+  max_scroll_attempts: 50      # Maximum scroll attempts before stopping
+  page_load_timeout: 30        # Seconds to wait for page load
+
+output:
+  # Output settings
+  output_dir: "output"
+  images_dir: "downloaded_images"
+  output_format: "json"        # json or csv
+  download_images: true        # Whether to download images locally
+  output_filename: "facebook_posts"
